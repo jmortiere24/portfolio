@@ -1173,13 +1173,26 @@ function toggleTheme(){
   });
 })();
 
+function sizeActiveBullets(){
+  const active=document.querySelector('.exp-card.active .exp-bullets');
+  if(active)active.style.maxHeight=active.scrollHeight+'px';
+}
 document.querySelectorAll('.exp-card').forEach(card=>{
   card.addEventListener('click',()=>{
     const was=card.classList.contains('active');
-    document.querySelectorAll('.exp-card').forEach(c=>c.classList.remove('active'));
-    if(!was)card.classList.add('active');
+    document.querySelectorAll('.exp-card').forEach(c=>{
+      c.classList.remove('active');
+      const b=c.querySelector('.exp-bullets');
+      if(b)b.style.maxHeight='';
+    });
+    if(!was){
+      card.classList.add('active');
+      sizeActiveBullets();
+    }
   });
 });
+sizeActiveBullets();
+window.addEventListener('resize',sizeActiveBullets);
 </script>
 </body>
 </html>
